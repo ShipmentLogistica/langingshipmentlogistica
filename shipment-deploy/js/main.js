@@ -39,13 +39,14 @@
             resetStats();
             document.querySelectorAll('[data-target]').forEach(el => {
                 const target = parseInt(el.dataset.target, 10);
-                const prefix = target >= 50 ? '+' : '';
+                const suffix = el.dataset.suffix || '';
+                const prefix = (!suffix && target >= 50) ? '+' : '';
                 const duration = 1600;
                 const step = target / (duration / 16);
                 let current = 0;
                 const timer = setInterval(() => {
                     current = Math.min(current + step, target);
-                    el.textContent = prefix + Math.floor(current);
+                    el.textContent = prefix + Math.floor(current) + suffix;
                     if (current >= target) clearInterval(timer);
                 }, 16);
                 statsTimers.push(timer);
